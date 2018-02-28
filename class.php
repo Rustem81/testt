@@ -1,13 +1,12 @@
-
 <?php
 class DB
 {
-    /*
+
     public $var = 'значение по умолчанию';
     public $servername = "localhost";
     public $username = "root";
     public $password = "";
-    public $dbname = "config";*/
+    public $dbname = "config";
 
     // объявление метода
     public function displayVar() {
@@ -15,7 +14,7 @@ class DB
         echo $this->var;
     }
 
-    public function set($paramName, $paramValue){
+    static function set($paramName, $paramValue){
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -53,13 +52,22 @@ class DB
             die("Подключение не удалось: " . $conn->connect_error);
         }
 
-        $sql = "SELECT paramValue FROM config_t";
+        $sql = "SELECT  paramValue FROM config_t";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) { // если массив не пуст
             // выводим из массива
+            $row = $result->fetch_assoc();
+            //$key = array_search($row);
+            echo count($row); // выводит 2
+          //  echo "!!!paramValue!!!: " . $key;
+
+
             while($row = $result->fetch_assoc()) {
-                echo "paramValue: " . $row["paramValue"]. ", ";
+
+
+               // echo "paramValue: " . $row["paramValue"]. ", ";
+                $ddd=$row;
             }
         } else { //значений нет
             echo "записи отсутствуют";
@@ -67,19 +75,26 @@ class DB
         $conn->close(); //закрываем соединение с БД
     }
 
-    public function save(){//в ТЗ отсутствует инфа, что должен делаать этот метод
+    static function save(){//в ТЗ отсутствует инфа, что должен делаать этот метод
 
     }
 }
 
 //тесты
-$test =new DB();
-$test->get();
-for ($i = 1; $i <= 10; $i++) {
-    //$paramValue=$i;
-    $test->set($i,$i+1);
+//$test =new DB(2);
+//$test->get();
+//for ($i = 1; $i <= 10; $i++) {
+//    $paramValue = $i;
+ //   $test->set($i, $i + 1);
 
 
+
+//}
+//$param2 = DB::get('1');
+
+
+$param1 = new DB();
+$param1->get();
 
 
 
